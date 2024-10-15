@@ -1,10 +1,3 @@
-# SMS
+#SMS
 
-## Install the following python dependencies:
-
-```
-pip3 install Flask
-```
-```
-pip install Flask-RESTful
-```
+This is a School Management System project.
