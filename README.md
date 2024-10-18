@@ -29,7 +29,7 @@ This project is designed to serve as a **Minimum Viable Product (MVP)** for scho
 
 ## Project Features
 
-- **User Authentication**: Role-based access for Admin, Teachers, and Students (JWT-based).
+- **User Authentication**: Role-based access for Admin, Teachers, and Students (JWT).
 - **CRUD Operations**: Manage Students, Teachers, Admins, Classes, Subjects.
 - **Result/Grade Management**: Teachers can manage student grades.
 - **Attendance Management**: Track student attendance.
@@ -40,10 +40,10 @@ This project is designed to serve as a **Minimum Viable Product (MVP)** for scho
 ## Technologies Used
 
 - **Backend Framework**: Flask
-- **Database**: SQLite3 (or MySQL for production)
+- **Database**: MySQL
 - **ORM**: SQLAlchemy
 - **Authentication**: JSON Web Token (JWT)
-- **Development Tools**: Postman (API Testing), Git, Virtualenv
+- **Development Tools**: Postman (API Testing), Git, python-venv
 
 
 ## Folder Structure
@@ -98,26 +98,26 @@ Before you begin, ensure you have met the following requirements:
 
 - Python 3.x installed on your local machine.
 - Git installed for version control.
-- Virtualenv to create isolated Python environments.
+- Python venv module to create isolated Python environments.
 - Postman for API testing (optional but recommended).
 
 ### Installation
 1. **Clone the repository:**
-```bash
-git clone https://github.com/your-username/school-management-system.git
-cd school-management-system
-```
+    ```bash
+    git clone https://github.com/your-username/school-management-system.git
+    cd school-management-system
+    ```
 
 2. **Create and activate a virtual environment:**
-```bash
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
 
 3. **Install dependencies:**
-```bash
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 4. **Set up the SQLite database:** The SQLite database file will be automatically created the first time you run the app.  Alternatively, you can manually create the database and apply migrations if needed.
 
@@ -138,23 +138,28 @@ Here is a list of the available API endpoints for the School Management System.
 **Authentication:**
 - `POST /api/auth/register` - Register a new user.
 - `POST /api/auth/login` - Login and retrieve a JWT token.
+
 **Student Management:**
 - `GET /api/students` - Retrieve all students.
 - `GET /api/students/<id>` - Retrieve a specific student by ID.
 - `POST /api/students` - Add a new student.
 - `PUT /api/students/<id>` - Update student information.
 - `DELETE /api/students/<id>` - Delete a student.
+
 **Teacher Management:**
 - `GET /api/teachers` - Retrieve all teachers.
 - `POST /api/teachers` - Add a new teacher.
 - `PUT /api/teachers/<id>` - Update teacher information.
 - `DELETE /api/teachers/<id>` - Delete a teacher.
+
 **Attendance Management:**
 - `GET /api/attendance` - Retrieve attendance records.
 - `POST /api/attendance` - Record attendance for a student.
+
 **Results/Grade Management:**
 - `GET /api/results/<student_id>` - Retrieve grades for a student.
 - `POST /api/results` - Add or update a student's grades.
+
 Refer to the Postman collection (provided in this repo) for detailed request and response formats.
 
 ***
