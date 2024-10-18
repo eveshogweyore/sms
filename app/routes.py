@@ -1,6 +1,9 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from . import db
 from .models import User, Student, Teacher, Admin, Class, Subject, Attendance, Result
+import datetime
+import jwt
+from werkzeug.security import generate_password_hash, check_password_hash
 
 main = Blueprint('main', __name__)
 
@@ -10,6 +13,7 @@ def index():
 
 ### ---------------- Authentication Endpoints ---------------- ###
 
+'''
 @main.route('/api/auth/register', methods=['POST'])
 def register_user():
     data = request.get_json()
@@ -22,13 +26,60 @@ def register_user():
     db.session.add(new_user)
     db.session.commit()
     return jsonify({'message': 'User registered successfully!'}), 201
+'''
 
-@main.route('/api/auth/login', methods=['POST'])
+@main.route('/api/auth/register', methods=['POST'])
+def register_user():
+    data = request.get_json()
+
+    # Hash the password before storing it
+    hashed_password = generate_password_hash(data['password'], method='pbkdf2:sha256')
+
+    # Create a new user with the hashed password
+    new_user = User(
+        username=data['username'],
+        email=data['email'],
+        password=hashed_password,  # Store the hashed password
+        role=data['role']
+    )
+
+    # Add the user to the database
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'message': 'User registered successfully!'}), 201
+
+
+'''
+@main.route('/api/auth/login', methods=['POST'])i
 def login_user():
     data = request.get_json()
     user = User.query.filter_by(username=data['username']).first()
     if user and user.password == data['password']:  # In production, use password hashing
         return jsonify({'message': 'Login successful!'}), 200
+    return jsonify({'message': 'Invalid credentials!'}), 401
+'''
+
+@main.route('/api/auth/login', methods=['POST'])
+def login_user():
+    data = request.get_json()
+    
+    # Fetch the user by username
+    user = User.query.filter_by(username=data['username']).first()
+    
+    # Check if the user exists and if the password is correct (use hashed passwords in production)
+    if user and check_password_hash(user.password, data['password']):
+        
+        # Generate the JWT token with expiration
+        token = jwt.encode({
+            'id': user.id,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # Token expiration time
+        }, current_app.config['SECRET_KEY'], algorithm='HS256')
+
+        # Return the token in the response
+        return jsonify({'token': token}), 200
+    
+    # If credentials are invalid, return an error
     return jsonify({'message': 'Invalid credentials!'}), 401
 
 @main.route('/api/auth/logout', methods=['POST'])
