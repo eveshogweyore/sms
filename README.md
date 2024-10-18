@@ -104,7 +104,7 @@ Before you begin, ensure you have met the following requirements:
 ### Installation
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/school-management-system.git
+    git clone https://github.com/eveshogweyore/sms.git
     cd school-management-system
     ```
 
@@ -119,7 +119,7 @@ Before you begin, ensure you have met the following requirements:
     pip install -r requirements.txt
     ```
 
-4. **Set up the SQLite database:** The SQLite database file will be automatically created the first time you run the app.  Alternatively, you can manually create the database and apply migrations if needed.
+4. **Set up the MySQL database:** The MySQL database file will **NOT** be automatically created the first time you run the app. Hence, ensure that you create the database first in your MySQL shell before you run the app. The **Database Tables** will be automatically created when you run the app.
 
 ***
 
